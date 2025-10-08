@@ -16,18 +16,18 @@ public class Calificacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
-    private Long idUsuario;  // ID del usuario (referencia al microservicio Usuarios)
+    private Integer idUsuario;  // ID del usuario (referencia al microservicio Usuarios)
 
     @Column(nullable = false)
-    private Long idRuta;     // ID de la ruta (referencia al microservicio Rutas)
+    private Integer idRuta;     // ID de la ruta (referencia al microservicio Rutas)
 
     @Column(nullable = false)
     private Integer puntuacion; // Valor entre 1 y 5
 
-    @Column
+    @Column(length = 120)
     private String comentario;
 
     @Column(nullable = false)
