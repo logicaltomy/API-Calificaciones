@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+// get y post funcionan
 @RequestMapping("/api/v1/calificaciones")
 public class CalificacionController {
 
