@@ -19,10 +19,10 @@ public class Calificacion {
     private Integer id;
 
     @Column(nullable = false)
-    private Integer idUsuario;  // ID del usuario (referencia al microservicio Usuarios)
+    private Integer idUsuario;  // id del usuario (referencia al microservicio Usuarios)
 
     @Column(nullable = false)
-    private Integer idRuta;     // ID de la ruta (referencia al microservicio Rutas)
+    private Integer idRuta;     // id de la ruta (referencia al microservicio Rutas)
 
     @Column(nullable = false)
     private Integer puntuacion; // Valor entre 1 y 5
