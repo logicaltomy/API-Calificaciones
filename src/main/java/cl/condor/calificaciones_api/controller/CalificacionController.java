@@ -5,9 +5,12 @@ import cl.condor.calificaciones_api.service.CalificacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Tag(
@@ -65,4 +68,24 @@ public class    CalificacionController {
         Calificacion saved = calificacionService.save(calificacion);
         return ResponseEntity.status(201).body(saved);
     }
+
+    @GetMapping("/ruta/{idRuta}")
+    public ResponseEntity<List<Calificacion>> getCalificacionesByIdRuta(@PathVariable Integer idRuta) {
+        try {
+            List<Calificacion> lista = calificacionService.findByIdRuta(idRuta);
+            return ResponseEntity.ok(lista);
+        } catch (RuntimeException e) {
+            if (e.getMessage().equals("No se encontraron calificaciones para la ruta especificada")) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/ruta/{idRuta}/promedio")
+    public ResponseEntity<Double> getPromedioCalificacionesByIdRuta(@PathVariable Integer idRuta) {
+        Double promedio = calificacionService.calcularPromedioPorIdRuta(idRuta);
+        return ResponseEntity.ok(promedio);
+    }
+
 }

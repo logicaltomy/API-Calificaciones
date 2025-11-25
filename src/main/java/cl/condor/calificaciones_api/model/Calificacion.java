@@ -27,9 +27,6 @@ public class Calificacion {
     @Column(nullable = false)
     private Integer puntuacion; // Valor entre 1 y 5
 
-    @Column(length = 120)
-    private String comentario;
-
     @Column(nullable = false)
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 }

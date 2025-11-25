@@ -57,7 +57,6 @@ public class CalificacionServiceTest {
         calificacionValida.setIdUsuario(10); // ID de usuario simulado
         calificacionValida.setIdRuta(50);    // ID de ruta simulada
         calificacionValida.setPuntuacion(4);
-        calificacionValida.setComentario("Excelente ruta!");
         calificacionValida.setFechaCreacion(LocalDateTime.now());
 
         calificacionValida2 = new Calificacion();
@@ -65,7 +64,6 @@ public class CalificacionServiceTest {
         calificacionValida2.setIdUsuario(1); // ID de usuario simulado
         calificacionValida2.setIdRuta(2);    // ID de ruta simulada
         calificacionValida2.setPuntuacion(4);
-        calificacionValida2.setComentario("Excelente ruta!");
         calificacionValida2.setFechaCreacion(LocalDateTime.now());
     }
 

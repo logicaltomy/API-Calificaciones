@@ -42,7 +42,6 @@ public class CalificacionControllerTest {
         calificacionEjemplo.setIdUsuario(10);
         calificacionEjemplo.setIdRuta(50);
         calificacionEjemplo.setPuntuacion(5);
-        calificacionEjemplo.setComentario("Una ruta de 5 estrellas");
         calificacionEjemplo.setFechaCreacion(LocalDateTime.now());
     }
 

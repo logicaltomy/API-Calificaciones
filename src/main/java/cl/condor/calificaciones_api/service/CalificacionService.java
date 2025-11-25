@@ -46,4 +46,18 @@ public class CalificacionService {
 
         return calificacionRepository.save(calificacion);
     }
+
+    public List<Calificacion> findByIdRuta(Integer idRuta) {
+        return calificacionRepository.findByIdRuta(idRuta)
+                .orElseThrow(() -> new RuntimeException("No se encontraron calificaciones para la ruta especificada"));
+    }
+
+    //Calcula el promedio de las calificaciones de una ruta
+    public Double calcularPromedioPorIdRuta(Integer idRuta) {
+        List<Calificacion> calificaciones = findByIdRuta(idRuta);
+        return calificaciones.stream()
+                .mapToDouble(Calificacion::getPuntuacion)
+                .average()
+                .orElse(0.0);
+    }
 }
