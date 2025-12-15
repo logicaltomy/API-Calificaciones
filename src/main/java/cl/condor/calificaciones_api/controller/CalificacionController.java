@@ -28,11 +28,12 @@ public class    CalificacionController {
     private CalificacionService calificacionService;
 
     @Operation(
-            summary = "Listar todas las calificaciones",
-            description = """
-                Retorna la lista completa de calificaciones registradas.
-                Si no hay registros, devuelve HTTP 204 No Content.
-                """
+        summary = "Listar todas las calificaciones",
+        description = "Retorna la lista completa de calificaciones registradas.",
+        responses = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Lista de calificaciones obtenida exitosamente."),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "No hay calificaciones registradas.")
+        }
     )
     @GetMapping
     public ResponseEntity<List<Calificacion>> getAllCalificaciones() {
@@ -42,11 +43,12 @@ public class    CalificacionController {
     }
 
     @Operation(
-            summary = "Buscar calificación por ID",
-            description = """
-                Devuelve una calificación específica según su identificador.
-                Si no existe, responde con HTTP 404 Not Found.
-                """
+        summary = "Buscar calificación por ID",
+        description = "Devuelve una calificación específica según su identificador.",
+        responses = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Calificación encontrada."),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Calificación no encontrada.")
+        }
     )
     @GetMapping("/{id}")
     public ResponseEntity<Calificacion> getCalificacionById(@PathVariable Integer id) {
@@ -58,10 +60,22 @@ public class    CalificacionController {
     }
 
     @Operation(
-            summary = "Crear una nueva calificación",
-            description = """
-                Registra una nueva calificación en el sistema.
-                """
+        summary = "Crear una nueva calificación",
+        description = "Registra una nueva calificación en el sistema.",
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "JSON con los datos de la calificación a registrar.",
+            required = true,
+            content = @io.swagger.v3.oas.annotations.media.Content(
+                mediaType = "application/json",
+                examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
+                    value = "{\n  \"id_usuario\": 1,\n  \"id_ruta\": 2,\n  \"valor\": 4.5,\n  \"comentario\": \"Muy buena ruta\"\n}"
+                )
+            )
+        ),
+        responses = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Calificación creada exitosamente."),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Datos inválidos o faltantes.")
+        }
     )
     @PostMapping
     public ResponseEntity<Calificacion> createCalificacion(@RequestBody Calificacion calificacion) {
@@ -69,6 +83,15 @@ public class    CalificacionController {
         return ResponseEntity.status(201).body(saved);
     }
 
+    @Operation(
+        summary = "Listar calificaciones por ruta",
+        description = "Devuelve todas las calificaciones asociadas a una ruta específica.",
+        responses = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Lista de calificaciones obtenida exitosamente."),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "No se encontraron calificaciones para la ruta especificada."),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Error interno del servidor.")
+        }
+    )
     @GetMapping("/ruta/{idRuta}")
     public ResponseEntity<List<Calificacion>> getCalificacionesByIdRuta(@PathVariable Integer idRuta) {
         try {
@@ -82,6 +105,13 @@ public class    CalificacionController {
         }
     }
 
+    @Operation(
+        summary = "Obtener promedio de calificaciones por ruta",
+        description = "Devuelve el promedio de todas las calificaciones asociadas a una ruta específica.",
+        responses = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Promedio calculado exitosamente.")
+        }
+    )
     @GetMapping("/ruta/{idRuta}/promedio")
     public ResponseEntity<Double> getPromedioCalificacionesByIdRuta(@PathVariable Integer idRuta) {
         Double promedio = calificacionService.calcularPromedioPorIdRuta(idRuta);
